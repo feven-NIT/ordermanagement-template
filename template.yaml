@@ -18,6 +18,7 @@ spec:
         - component_id
         - owner
         - java_package_name
+        - cluster_ingress_path
       properties:
         component_id:
           title: Name
@@ -30,6 +31,11 @@ spec:
           type: string
           default: redhat.janus
           description: Maven Group Id
+        cluster_ingress_path:
+          title: cluster ingress path
+          type: string
+          default: .apps.cluster-name.your-base-domain.com
+          description: You cluster ingress path
         artifact_id:
           title: Artifact Id
           type: string

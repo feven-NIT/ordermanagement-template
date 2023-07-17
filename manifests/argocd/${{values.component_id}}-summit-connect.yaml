@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: ${{ values.destination }}
     targetRevision: master
-    path: gitops/base
+    path: ./base
   destination:
     server: https://kubernetes.default.svc
     namespace: ${{ values.component_id }}-summit-connect

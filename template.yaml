@@ -168,7 +168,7 @@ spec:
         argoInstance: main
         namespace: openshift-gitops
         repoUrl: https://github.com/${{ (parameters.repoUrl | parseRepoUrl).owner }}/${{ (parameters.repoUrl | parseRepoUrl).repo }}-tekton.git
-        path: 'tekton/'
+        path: 'argocd/'
 
     - id: template
       name: Generating component

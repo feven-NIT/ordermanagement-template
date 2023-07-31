@@ -1,0 +1,8 @@
+io/ordermanagement/inventory/service/ProductService.class
+io/ordermanagement/inventory/exception/handler/ResourceNotFoundExceptionHandler.class
+io/ordermanagement/inventory/controller/ProductController.class
+META-INF/panache-archive.marker
+io/ordermanagement/inventory/service/IProductService.class
+io/ordermanagement/inventory/repository/ProductRepository.class
+io/ordermanagement/inventory/model/Product.class
+io/ordermanagement/inventory/exception/ResourceNotFoundException.class

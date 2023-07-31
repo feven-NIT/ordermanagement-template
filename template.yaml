@@ -119,8 +119,8 @@ spec:
           default: ../../scaffolder-skeletons/tekton-skeleton/
           enum:
             - ../../scaffolder-skeletons/tekton-skeleton/
-            - ../../scaffolder-skeletons/tekton-skeleton/
-            - ../../scaffolder-skeletons/tekton-skeleton/
+            - ../../scaffolder-skeletons/tekton-skeleton-todo/
+            - ../../scaffolder-skeletons/tekton-skeleton-todo2/
           enumNames:
             - Basic Tekton CI
             - Tekton CI with Security Check

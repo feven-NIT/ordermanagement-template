@@ -147,6 +147,29 @@ spec:
           imageRepository: ${{ parameters.component_id }}
           port: 5000
           ci: ${{ parameters.ci }}
+        targetPath: ./tenant-tekton
+
+    - id: publish
+      name: Publishing to Source Code Repository
+      action: publish:github
+      input:
+        description: This is ${{ parameters.component_id }}
+        repoUrl: github.com?repo=${{ (parameters.repoUrl | parseRepoUrl).repo }}-tekton&owner=${{ (parameters.repoUrl | parseRepoUrl).owner }}
+        defaultBranch: main
+        protectDefaultBranch: false
+        repoVisibility: public
+        sourcePath: ./tenant-tekton
+
+    - id: create-argocd-resources
+      name: Create ArgoCD Resources
+      action: argocd:create-resources
+      input:
+        appName: ${{ parameters.component_id }}-bootstrap
+        argoInstance: main
+        namespace: openshift-gitops
+        repoUrl: https://github.com/${{ (parameters.repoUrl | parseRepoUrl).owner }}/${{ (parameters.repoUrl | parseRepoUrl).repo }}-tekton.git
+        path: 'argocd/'
+
     - id: template
       name: Generating component
       action: fetch:template

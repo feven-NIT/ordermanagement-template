@@ -20,6 +20,10 @@ spec:
         - java_package_name
         - cluster_ingress_path
       properties:
+        githubOrg:
+          title: GitHub Organization
+          type: string
+          default: feven-redhat
         component_id:
           title: Name
           type: string
@@ -104,8 +108,45 @@ spec:
           ui:options:
             allowedHosts:
               - github.com
+    - title: Provide information about the CI method
+      required:
+        - ci
+      properties:
+        ci:
+          title: Select a CI 
+          type: string
+          description: This action will create a CI pipeline for your application based on chosen method
+          default: ../../scaffolder-skeletons/tekton-skeleton/
+          enum:
+            - ../../scaffolder-skeletons/tekton-skeleton/
+            - ../../scaffolder-skeletons/tekton-skeleton/
+            - ../../scaffolder-skeletons/tekton-skeleton/
+          enumNames:
+            - Basic Tekton CI
+            - Tekton CI with Security Check
+            - Tekton CI with Scan and Security Check
 
   steps:
+    - id: ciTemplate
+      name: Generating the CI Component
+      action: fetch:template
+      input:
+        url: ${{ parameters.ci }}
+        copyWithoutTemplating:
+          - .github/workflows/
+        values:
+          githubOrg: ${{ parameters.githubOrg }}
+          repoName: ${{ parameters.component_id }}-dev
+          owner: ${{ parameters.owner }}
+          system: ${{ parameters.system }}
+          applicationType: api
+          description: ci for ${{ parameters.component_id }}
+          namespace: openshift-pipeline
+          imageUrl: ${{ parameters.image_registry }}
+          imageBuilder: s2i-python
+          imageRepository: ${{ parameters.component_id }}
+          port: 5000
+          ci: ${{ parameters.ci }}
     - id: template
       name: Generating component
       action: fetch:template

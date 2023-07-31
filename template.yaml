@@ -149,8 +149,8 @@ spec:
           ci: ${{ parameters.ci }}
         targetPath: ./tenant-tekton
 
-    - id: publish
-      name: Publishing to Source Code Repository
+    - id: publish-pipeline
+      name: Publishing Pipeline Repository
       action: publish:github
       input:
         description: This is ${{ parameters.component_id }}
@@ -160,8 +160,8 @@ spec:
         repoVisibility: public
         sourcePath: ./tenant-tekton
 
-    - id: create-argocd-resources
-      name: Create ArgoCD Resources
+    - id: create-pipeline-resources
+      name: Create Pipeline resources
       action: argocd:create-resources
       input:
         appName: ${{ parameters.component_id }}-bootstrap

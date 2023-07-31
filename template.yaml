@@ -135,6 +135,8 @@ spec:
         copyWithoutTemplating:
           - .github/workflows/
         values:
+          component_id: ${{ parameters.component_id }}
+          namespace: ${{ parameters.component_id }}-dev
           githubOrg: ${{ parameters.githubOrg }}
           repoName: ${{ parameters.component_id }}-dev
           owner: ${{ parameters.owner }}
@@ -179,7 +181,6 @@ spec:
           - .github/workflows/*
         values:
           component_id: ${{ parameters.component_id }}
-          namespace: ${{ parameters.component_id }}-dev
           description: ${{ parameters.description }}
           group_id: ${{ parameters.group_id }}
           artifact_id: ${{ parameters.artifact_id }}

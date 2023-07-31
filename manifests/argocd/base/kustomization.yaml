@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-# todo-app
-  - ./todo-app/quarkus-app-config.yaml
-  - ./todo-app/todo-app.yaml
-  - ./todo-app/postgres.yaml
+# inventory
+  - ./inventory/quarkus-app-config.yaml
+  - ./inventory/inventory.yaml
+  - ./inventory/postgres.yaml

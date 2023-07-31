@@ -5,3 +5,4 @@ resources:
   - ./inventory/quarkus-app-config.yaml
   - ./inventory/inventory.yaml
   - ./inventory/postgres.yaml
+  - ./inventory/postgres-credentials.yaml

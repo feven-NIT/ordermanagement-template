@@ -118,9 +118,9 @@ spec:
           description: This action will create a CI pipeline for your application based on chosen method
           default: ../../scaffolder-skeletons/tekton-skeleton/
           enum:
-            - ./scaffolder-skeletons/tekton-skeleton/
-            - ./scaffolder-skeletons/tekton-skeleton-todo/
-            - ./scaffolder-skeletons/tekton-skeleton-todo2/
+            - ./scaffolder-skeletons/tekton-skeleton-basic/
+            - ./scaffolder-skeletons/tekton-skeleton-scan/
+            - ./scaffolder-skeletons/tekton-skeleton-scan-check/
           enumNames:
             - Basique Tekton CI
             - Tekton CI with Security Check

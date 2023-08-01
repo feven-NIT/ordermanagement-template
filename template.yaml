@@ -132,8 +132,7 @@ spec:
       action: fetch:template
       input:
         url: ${{ parameters.ci }}
-        copyWithoutTemplating:
-          - .github/workflows/
+        copyWithoutTemplating: []
         values:
           component_id: ${{ parameters.component_id }}
           namespace: ${{ parameters.component_id }}-dev

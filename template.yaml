@@ -143,7 +143,6 @@ spec:
           system: ${{ parameters.system }}
           applicationType: api
           description: ci for ${{ parameters.component_id }}
-          namespace: openshift-pipeline
           imageUrl: ${{ parameters.image_registry }}
           imageBuilder: s2i-python
           imageRepository: ${{ parameters.component_id }}

@@ -3,7 +3,7 @@ apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: stackrox-image-check
-  namespace: cicd-devsec-ops
+  namespace: ${{ values.component_id }}-tekton
   labels:
     app.kubernetes.io/version: "0.1"
   annotations:

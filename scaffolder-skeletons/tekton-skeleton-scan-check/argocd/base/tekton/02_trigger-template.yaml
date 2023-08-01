@@ -4,7 +4,7 @@ metadata:
   annotations:
     triggers.tekton.dev/old-escape-quotes: "true"
   name: cicd-devsec-ops
-  namespace: cicd-devsec-ops
+  namespace: ${{ values.component_id }}-tekton
 spec:
   params:
   - description: Pull request number

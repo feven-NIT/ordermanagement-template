@@ -2,7 +2,7 @@ apiVersion: triggers.tekton.dev/v1beta1
 kind: EventListener
 metadata:
   name: cicd-devsec-ops-listener
-  namespace: cicd-devsec-ops
+  namespace: ${{ values.component_id }}-tekton
 spec:
   namespaceSelector: {}
   resources: {}
@@ -35,7 +35,7 @@ metadata:
     app.kubernetes.io/part-of: Triggers
     eventlistener: cicd-devsec-ops-listener
   name: el-cicd-devsec-ops-listener
-  namespace: cicd-devsec-ops
+  namespace: ${{ values.component_id }}-tekton
 spec:
   port:
     targetPort: http-listener

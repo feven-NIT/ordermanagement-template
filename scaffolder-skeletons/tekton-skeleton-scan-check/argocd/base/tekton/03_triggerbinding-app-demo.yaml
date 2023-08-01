@@ -2,7 +2,7 @@ apiVersion: triggers.tekton.dev/v1beta1
 kind: TriggerBinding
 metadata:
   name: cicd-devsec-ops
-  namespace: cicd-devsec-ops
+  namespace: ${{ values.component_id }}-tekton
 spec:
   params:
   - name: pr-number

@@ -10,7 +10,7 @@ spec:
   project: backstage
   source:
     repoURL: ${{ values.destination }}
-    targetRevision: master
+    targetRevision: main
     path: argocd/base
   destination:
     server: https://kubernetes.default.svc

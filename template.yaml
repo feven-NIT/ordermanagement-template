@@ -135,6 +135,7 @@ spec:
         copyWithoutTemplating: []
         values:
           component_id: ${{ parameters.component_id }}
+          destination: https://github.com/${{ (parameters.repoUrl | parseRepoUrl).owner }}/${{ (parameters.repoUrl | parseRepoUrl).repo }}-tekton
           namespace: ${{ parameters.component_id }}-dev
           githubOrg: ${{ parameters.githubOrg }}
           repoName: ${{ parameters.component_id }}-dev

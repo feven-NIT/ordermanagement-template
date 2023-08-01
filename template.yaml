@@ -136,9 +136,9 @@ spec:
         values:
           component_id: ${{ parameters.component_id }}
           destination: https://github.com/${{ (parameters.repoUrl | parseRepoUrl).owner }}/${{ (parameters.repoUrl | parseRepoUrl).repo }}-tekton
-          namespace: ${{ parameters.component_id }}-dev
+          namespace: ${{ parameters.component_id }}-tekton
           githubOrg: ${{ parameters.githubOrg }}
-          repoName: ${{ parameters.component_id }}-dev
+          repoName: ${{ parameters.component_id }}-tekton
           owner: ${{ parameters.owner }}
           system: ${{ parameters.system }}
           applicationType: api

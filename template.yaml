@@ -165,7 +165,7 @@ spec:
       name: Create Pipeline resources
       action: argocd:create-resources
       input:
-        appName: ${{ parameters.component_id }}-bootstrap
+        appName: ${{ parameters.component_id }}-tekton-bootstrap
         argoInstance: main
         namespace: openshift-gitops
         repoUrl: https://github.com/${{ (parameters.repoUrl | parseRepoUrl).owner }}/${{ (parameters.repoUrl | parseRepoUrl).repo }}-tekton.git
@@ -244,7 +244,7 @@ spec:
       name: Create ArgoCD Resources
       action: argocd:create-resources
       input:
-        appName: ${{ parameters.component_id }}-bootstrap
+        appName: ${{ parameters.component_id }}-argo-bootstrap
         argoInstance: main
         namespace: openshift-gitops
         repoUrl: https://github.com/${{ (parameters.repoUrl | parseRepoUrl).owner }}/${{ (parameters.repoUrl | parseRepoUrl).repo }}-gitops.git

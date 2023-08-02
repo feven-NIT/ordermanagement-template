@@ -10,7 +10,7 @@ metadata:
 spec:
   to:
     kind: Service
-    name: el-${{ values.repoName }}-el
+    name: el-vote-app
     weight: 100
   port:
     targetPort: http-listener

@@ -1,50 +1,68 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: ${{ values.repoName }}-pipeline
-  namespace: ${{ values.namespace }}
-  labels:
-    type: pipeline
+  name: build-and-deploy
 spec:
-  params:
-    - name: source-repo
-      description: source repo that contains the application code
-      type: string
-      default: https://github.com/${{ values.githubOrg }}/${{ values.repoName }}
-    - name: source-branch
-      description: source branch to build from
-      default: main
-      type: string
-    - name: output-image
-      description: reference of the image that will get created
-      default: ${{ values.imageRepository }}/${{ values.imageUrl }}/${{ values.repoName }}
-      type: string
-  tasks:
-    - name: git-clone
-      params:
-        - name: url
-          value: $(params.source-repo)
-        - name: revision
-          value: $(params.source-branch)
-      taskRef:
-        kind: ClusterTask
-        name: git-clone
-      workspaces:
-        - name: output
-          workspace: source-folder
-    - name: ${{ values.imageBuilder }}
-      params:
-        - name: VERSION
-          value: latest
-        - name: IMAGE
-          value: $(params.output-image)
-      runAfter:
-        - git-clone
-      taskRef:
-        kind: ClusterTask
-        name: ${{ values.imageBuilder }}
-      workspaces:
-        - name: source
-          workspace: source-folder
   workspaces:
-    - name: source-folder
+  - name: shared-workspace
+  params:
+  - name: deployment-name
+    type: string
+    description: name of the deployment to be patched
+  - name: git-url
+    type: string
+    description: url of the git repo for the code of deployment
+  - name: git-revision
+    type: string
+    description: revision to be used from repo of the code for deployment
+    default: master
+  - name: IMAGE
+    type: string
+    description: image to be build from the code
+  tasks:
+  - name: fetch-repository
+    taskRef:
+      name: git-clone
+      kind: ClusterTask
+    workspaces:
+    - name: output
+      workspace: shared-workspace
+    params:
+    - name: url
+      value: $(params.git-url)
+    - name: subdirectory
+      value: ""
+    - name: deleteExisting
+      value: "true"
+    - name: revision
+      value: $(params.git-revision)
+  - name: build-image
+    taskRef:
+      name: buildah
+      kind: ClusterTask
+    params:
+    - name: IMAGE
+      value: $(params.IMAGE)
+    workspaces:
+    - name: source
+      workspace: shared-workspace
+    runAfter:
+    - fetch-repository
+  - name: apply-manifests
+    taskRef:
+      name: apply-manifests
+    workspaces:
+    - name: source
+      workspace: shared-workspace
+    runAfter:
+    - build-image
+  - name: update-deployment
+    taskRef:
+      name: update-deployment
+    params:
+    - name: deployment
+      value: $(params.deployment-name)
+    - name: IMAGE
+      value: $(params.IMAGE)
+    runAfter:
+    - apply-manifests

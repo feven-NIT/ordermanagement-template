@@ -292,6 +292,7 @@ spec:
           awsSecretAccessKey: ${{ parameters.awsSecretAccessKey }}
           awsRegion: ${{ parameters.awsRegion }}
           awsEndpoint: ${{ parameters.awsEndpoint }}
+        targetPath: ./tenant-techdocs
 
     # - id: catalogTemplateTechdocs
     #   name: Generating the Catalog Info Component for techdocs
@@ -316,6 +317,7 @@ spec:
         description: Contains the techdocs for ${{ parameters.repoName }}
         repoUrl: github.com?repo=${{ (parameters.repoUrl | parseRepoUrl).repo }}-techdocs&owner=${{ (parameters.repoUrl | parseRepoUrl).owner }}
         defaultBranch: main
+      sourcePath: ./tenant-techdocs
 
     - id: registerTechdocs
       name: Registering techdocsthe Catalog Info Component

@@ -125,6 +125,30 @@ spec:
             - Basique Tekton CI
             - Tekton CI with Security Check
             - Tekton CI with Scan and Security Check
+    
+    - title: Provide information about s3 bucket 
+      required:
+        - bucketName
+        - awsAccessKeyID
+        - awsSecretAccessKey
+        - awsRegion 
+        - awsEndpoint
+      properties:
+        bucketName:
+          title: Bucket Name
+          type: string
+        awsAccessKeyID:
+          title: Aws Access Key ID
+          type: string
+        awsSecretAccessKey:
+          title: Aws Secret Access Key
+          type: string
+        awsRegion:
+          title: Aws Region
+          type: string
+        awsEndpoint:
+          title: Aws Endpoint
+          type: string
 
   steps:
     - id: ciTemplate
@@ -249,6 +273,56 @@ spec:
         namespace: openshift-gitops
         repoUrl: https://github.com/${{ (parameters.repoUrl | parseRepoUrl).owner }}/${{ (parameters.repoUrl | parseRepoUrl).repo }}-gitops.git
         path: 'argocd/'
+
+    - id: sourceCodeTemplate
+      name: Generating the Tech docsSource Code Component
+      action: fetch:template
+      input:
+        url: ../../scaffolder-skeletons/techdocs-skeleton/
+        copyWithoutTemplating: []
+        values:
+          githubOrg: ${{ parameters.githubOrg }}
+          repoName: ${{ parameters.repoName }}-techdocs
+          owner: ${{ parameters.owner }}
+          # system: ${{ parameters.system }}
+          applicationType: documentation
+          description: Contains the techdocs for ${{ parameters.repoName }}
+          bucketName: ${{ parameters.bucketName }}
+          awsAccessKeyID: ${{ parameters.awsAccessKeyID }}
+          awsSecretAccessKey: ${{ parameters.awsSecretAccessKey }}
+          awsRegion: ${{ parameters.awsRegion }}
+          awsEndpoint: ${{ parameters.awsEndpoint }}
+
+    - id: catalogTemplate
+      name: Generating the Catalog Info Component
+      action: fetch:template
+      input:
+        url: ../../scaffolder-skeletons/catalog-info-skeleton/
+        values:
+          # Gitops specific values
+          partOf: ${{ parameters.componentName }}
+          githubOrg: ${{ parameters.githubOrg }}
+          repoName: ${{ parameters.repoName }}-techdocs
+          owner: ${{ parameters.owner }}
+          # system: ${{ parameters.system }}
+          applicationType: documentation
+          description: Contains the techdocs for ${{ parameters.repoName }}
+
+    - id: publish
+      name: Publishing to the Source Code Repository
+      action: publish:github
+      input:
+        allowedHosts: ['github.com']
+        description: Contains the techdocs for ${{ parameters.repoName }}
+        repoUrl: github.com?owner=${{ parameters.githubOrg }}&repo=${{ parameters.repoName }}-techdocs
+        defaultBranch: main
+
+    - id: register
+      name: Registering the Catalog Info Component
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: /catalog-info.yaml
 
   output:
     links:

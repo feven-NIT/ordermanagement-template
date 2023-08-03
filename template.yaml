@@ -116,7 +116,7 @@ spec:
           title: Select a CI 
           type: string
           description: This action will create a CI pipeline for your application based on chosen method
-          default: ../../scaffolder-skeletons/tekton-skeleton/
+          default: ./scaffolder-skeletons/tekton-skeleton/
           enum:
             - ./scaffolder-skeletons/tekton-skeleton-basic/
             - ./scaffolder-skeletons/tekton-skeleton-scan/
@@ -278,7 +278,7 @@ spec:
       name: Generating the Tech docsSource Code Component
       action: fetch:template
       input:
-        url: ../../scaffolder-skeletons/techdocs-skeleton/
+        url: ./scaffolder-skeletons/techdocs-skeleton/
         copyWithoutTemplating: []
         values:
           githubOrg: ${{ parameters.githubOrg }}
@@ -293,8 +293,8 @@ spec:
           awsRegion: ${{ parameters.awsRegion }}
           awsEndpoint: ${{ parameters.awsEndpoint }}
 
-    - id: catalogTemplate
-      name: Generating the Catalog Info Component
+    - id: catalogTemplateTechdocs
+      name: Generating the Catalog Info Component for techdocs
       action: fetch:template
       input:
         url: ../../scaffolder-skeletons/catalog-info-skeleton/
@@ -308,8 +308,8 @@ spec:
           applicationType: documentation
           description: Contains the techdocs for ${{ parameters.repoName }}
 
-    - id: publish
-      name: Publishing to the Source Code Repository
+    - id: publishTechdocs
+      name: Publishing techdocs to the Source Code Repository
       action: publish:github
       input:
         allowedHosts: ['github.com']
@@ -317,8 +317,8 @@ spec:
         repoUrl: github.com?owner=${{ parameters.githubOrg }}&repo=${{ parameters.repoName }}-techdocs
         defaultBranch: main
 
-    - id: register
-      name: Registering the Catalog Info Component
+    - id: registerTechdocs
+      name: Registering techdocsthe Catalog Info Component
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}

@@ -314,7 +314,7 @@ spec:
       input:
         allowedHosts: ['github.com']
         description: Contains the techdocs for ${{ parameters.repoName }}
-        repoUrl: github.com?owner=${{ parameters.githubOrg }}&repo=${{ parameters.repoName }}-techdocs
+        repoUrl: github.com?repo=${{ (parameters.repoUrl | parseRepoUrl).repo }}-techdocs&owner=${{ (parameters.repoUrl | parseRepoUrl).owner }}
         defaultBranch: main
 
     - id: registerTechdocs

@@ -293,20 +293,20 @@ spec:
           awsRegion: ${{ parameters.awsRegion }}
           awsEndpoint: ${{ parameters.awsEndpoint }}
 
-    - id: catalogTemplateTechdocs
-      name: Generating the Catalog Info Component for techdocs
-      action: fetch:template
-      input:
-        url: ../../scaffolder-skeletons/catalog-info-skeleton/
-        values:
-          # Gitops specific values
-          partOf: ${{ parameters.componentName }}
-          githubOrg: ${{ parameters.githubOrg }}
-          repoName: ${{ parameters.repoName }}-techdocs
-          owner: ${{ parameters.owner }}
-          # system: ${{ parameters.system }}
-          applicationType: documentation
-          description: Contains the techdocs for ${{ parameters.repoName }}
+    # - id: catalogTemplateTechdocs
+    #   name: Generating the Catalog Info Component for techdocs
+    #   action: fetch:template
+    #   input:
+    #     url: ../../scaffolder-skeletons/catalog-info-skeleton/
+    #     values:
+    #       # Gitops specific values
+    #       partOf: ${{ parameters.componentName }}
+    #       githubOrg: ${{ parameters.githubOrg }}
+    #       repoName: ${{ parameters.repoName }}-techdocs
+    #       owner: ${{ parameters.owner }}
+    #       # system: ${{ parameters.system }}
+    #       applicationType: documentation
+    #       description: Contains the techdocs for ${{ parameters.repoName }}
 
     - id: publishTechdocs
       name: Publishing techdocs to the Source Code Repository

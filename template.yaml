@@ -310,12 +310,12 @@ spec:
     #       description: Contains the techdocs for ${{ parameters.repoName }}
 
     - id: publishTechdocs
-      name: Publishing techdocs to the Source Code Repository
+      name: Publishing techdocs to the Source Code repository
       action: publish:github
       input:
         allowedHosts: ['github.com']
         description: Contains the techdocs for ${{ parameters.repoName }}
-        repoUrl: github.com?repo=${{ (parameters.repoUrl | parseRepoUrl).repo }}-techdocs&owner=${{ (parameters.repoUrl | parseRepoUrl).owner }}
+        repoUrl: github.com?repo=${{ (parameters.repoUrl | parseRepoUrl).repo }}-techdoc&owner=${{ (parameters.repoUrl | parseRepoUrl).owner }}
         defaultBranch: main
       sourcePath: ./tenant-techdocs
 
